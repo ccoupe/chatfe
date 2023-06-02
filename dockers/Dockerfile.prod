@@ -1,0 +1,12 @@
+FROM  nvcr.io/nvidia/pytorch:22.07-py3
+#
+WORKDIR /app
+COPY chatfe.py /app/
+ENV TZ=America/Boise
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get -y update 
+RUN apt-get install -y tzdata
+RUN pip install gpt4all-j
+RUN pip install flask
+
+CMD ["python", "/app/chatfe.py"]
